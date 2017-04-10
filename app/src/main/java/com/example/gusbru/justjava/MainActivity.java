@@ -1,13 +1,17 @@
 package com.example.gusbru.justjava;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    int quantity = 0;
+    private int quantity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,63 @@ public class MainActivity extends AppCompatActivity {
         displayQuantity();
     }
 
+    public void submitOrder(View view) {
+        int price = calculatePrice();
+        displayMessage(createOrderSummary(price));
+        showToast();
+    }
+
     private void displayQuantity() {
         TextView quantityTextView = (TextView) findViewById(R.id.quantity_label);
-        quantityTextView.setText(String.valueOf(quantity));
+        quantityTextView.setText(String.format(Locale.US, "%d", quantity));
+    }
+
+    /**
+     *
+     * @return the price assuming 5 dollars each cup of coffee
+     */
+    private int calculatePrice() {
+        return quantity * 5;
+    }
+
+    /**
+     * This method display a message in the screen with the order summary
+     *
+     * @param message is a string that contains the information about the
+     *                order summary
+     */
+    private void displayMessage(String message) {
+        // this is another way to create a View object and cast it to TextView and
+        // use instanceof to check if the cast was done properly.
+        View obj = findViewById(R.id.order_summary_text_view);
+        if (obj instanceof TextView) {
+            TextView orderSummaryTextView = (TextView) obj;
+            orderSummaryTextView.setText(message);
+        }
+    }
+
+    /**
+     * This method create an order summary
+     *
+     * @param price is the total value of the order
+     * @return a string with the order summary.
+     */
+    private String createOrderSummary(int price) {
+        String msg = "Name: Gustavo";
+        msg += "\nQuantity: " + quantity;
+        msg += "\nTotal: $" + price;
+        msg += "\nThank You!";
+        return msg;
+    }
+
+    private void showToast(){
+        Context context = getApplicationContext();
+        CharSequence msg = "Order Submitted!\nThanks";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, msg, duration);
+//        Toast toast = Toast.makeText(this, msg, duration);
+        toast.show();
     }
 
 }
