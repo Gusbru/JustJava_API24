@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
      * This method create an order summary
      *
      * @param price is the total value of the order
+     * @param hasWhippedCream is whether or not the user wants whipped cream topping
      * @return a string with the order summary.
      */
     private String createOrderSummary(int price, boolean hasWhippedCream) {
@@ -85,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean whippedCream() {
         CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
-        Boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
-        return hasWhippedCream;
+        return whippedCreamCheckBox.isChecked();
     }
 
     private void showToast(){
