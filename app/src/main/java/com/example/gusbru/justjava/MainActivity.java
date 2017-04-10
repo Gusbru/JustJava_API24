@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void submitOrder(View view) {
         int price = calculatePrice();
-        displayMessage(createOrderSummary(price));
+        boolean hasWhippedCream = whippedCream();
+        displayMessage(createOrderSummary(price, hasWhippedCream));
         showToast();
     }
 
@@ -72,12 +74,19 @@ public class MainActivity extends AppCompatActivity {
      * @param price is the total value of the order
      * @return a string with the order summary.
      */
-    private String createOrderSummary(int price) {
+    private String createOrderSummary(int price, boolean hasWhippedCream) {
         String msg = "Name: Gustavo";
+        msg += "\nAdd Whipped Cream? " + hasWhippedCream;
         msg += "\nQuantity: " + quantity;
         msg += "\nTotal: $" + price;
         msg += "\nThank You!";
         return msg;
+    }
+
+    private boolean whippedCream() {
+        CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
+        Boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
+        return hasWhippedCream;
     }
 
     private void showToast(){
