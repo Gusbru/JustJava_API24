@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         boolean hasWhippedCream = whippedCream();
         boolean hasChocolate = chocolate();
         String name = name();
-        displayMessage(createOrderSummary(price, hasWhippedCream, hasChocolate, name));
+        displayMessage(createOrderSummary(name, price, hasWhippedCream, hasChocolate));
         showToast();
     }
 
@@ -77,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method create an order summary
      *
+     * @param name customer name
      * @param price is the total value of the order
      * @param hasWhippedCream is whether or not the user wants whipped cream topping
      * @param hasChocolate is whether or not the user wants chocolate topping
-     * @param name customer name
      * @return a string with the order summary.
      */
-    private String createOrderSummary(int price, boolean hasWhippedCream, boolean hasChocolate, String name) {
+    private String createOrderSummary(String name, int price, boolean hasWhippedCream, boolean hasChocolate) {
         String msg = "Name: " + name;
         msg += "\nAdd Whipped Cream? " + hasWhippedCream;
         msg += "\nAdd Chocolate? " + hasChocolate;
