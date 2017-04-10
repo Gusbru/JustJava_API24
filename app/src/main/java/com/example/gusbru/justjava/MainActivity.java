@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public void submitOrder(View view) {
         int price = calculatePrice();
         boolean hasWhippedCream = whippedCream();
-        displayMessage(createOrderSummary(price, hasWhippedCream));
+        boolean hasChocolate = chocolate();
+        displayMessage(createOrderSummary(price, hasWhippedCream, hasChocolate));
         showToast();
     }
 
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      *
+     * Calculate the total price
+     *
      * @return the price assuming 5 dollars each cup of coffee
      */
     private int calculatePrice() {
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     *
      * This method display a message in the screen with the order summary
      *
      * @param message is a string that contains the information about the
@@ -73,20 +77,39 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param price is the total value of the order
      * @param hasWhippedCream is whether or not the user wants whipped cream topping
+     * @param hasChocolate is whether or not the user wants chocolate topping
      * @return a string with the order summary.
      */
-    private String createOrderSummary(int price, boolean hasWhippedCream) {
+    private String createOrderSummary(int price, boolean hasWhippedCream, boolean hasChocolate) {
         String msg = "Name: Gustavo";
         msg += "\nAdd Whipped Cream? " + hasWhippedCream;
+        msg += "\nAdd Chocolate? " + hasChocolate;
         msg += "\nQuantity: " + quantity;
         msg += "\nTotal: $" + price;
         msg += "\nThank You!";
         return msg;
     }
 
+    /**
+     *
+     * Check box for whipped cream
+     *
+     * @return boolean with the information to add (true) or not (false) whipped cream
+     */
     private boolean whippedCream() {
         CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_cream_checkbox);
         return whippedCreamCheckBox.isChecked();
+    }
+
+    /**
+     *
+     * Check if chocolate is checked as toppings
+     *
+     * @return boolean with the information if chocolate should be added (true) or not (false)
+     */
+    private boolean chocolate() {
+        CheckBox hasChocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_checkbox);
+        return hasChocolateCheckBox.isChecked();
     }
 
     private void showToast(){
