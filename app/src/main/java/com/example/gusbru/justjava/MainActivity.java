@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         int price = calculatePrice();
         boolean hasWhippedCream = whippedCream();
         boolean hasChocolate = chocolate();
-        displayMessage(createOrderSummary(price, hasWhippedCream, hasChocolate));
+        String name = name();
+        displayMessage(createOrderSummary(price, hasWhippedCream, hasChocolate, name));
         showToast();
     }
 
@@ -78,10 +80,11 @@ public class MainActivity extends AppCompatActivity {
      * @param price is the total value of the order
      * @param hasWhippedCream is whether or not the user wants whipped cream topping
      * @param hasChocolate is whether or not the user wants chocolate topping
+     * @param name customer name
      * @return a string with the order summary.
      */
-    private String createOrderSummary(int price, boolean hasWhippedCream, boolean hasChocolate) {
-        String msg = "Name: Gustavo";
+    private String createOrderSummary(int price, boolean hasWhippedCream, boolean hasChocolate, String name) {
+        String msg = "Name: " + name;
         msg += "\nAdd Whipped Cream? " + hasWhippedCream;
         msg += "\nAdd Chocolate? " + hasChocolate;
         msg += "\nQuantity: " + quantity;
@@ -110,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean chocolate() {
         CheckBox hasChocolateCheckBox = (CheckBox) findViewById(R.id.chocolate_checkbox);
         return hasChocolateCheckBox.isChecked();
+    }
+
+    private String name() {
+        EditText nameEditText = (EditText) findViewById(R.id.nameEditText);
+        return nameEditText.getText().toString();
     }
 
     private void showToast(){
