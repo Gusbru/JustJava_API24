@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int quantity = 0;
+    private int quantity = 1;
     private int unitPrice = 5;
 
     @Override
@@ -24,12 +24,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void incrementQuantity(View view) {
         quantity += 1;
+        if (quantity > 100) {
+            quantity = 100;
+            showToast("Order above " +  quantity + " is not allowed");
+        }
         displayQuantity();
     }
 
     public void decrementQuantity(View view) {
-        if (quantity > 0) {
-            quantity -= 1;
+        quantity -= 1;
+        if (quantity < 1) {
+            quantity = 1;
+            showToast("Order below than " + quantity + " is not allowed");
         }
         displayQuantity();
     }
@@ -41,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         boolean hasChocolate = chocolate();
         price = calculatePrice(hasWhippedCream, hasChocolate);
         displayMessage(createOrderSummary(name, price, hasWhippedCream, hasChocolate));
-        showToast();
+        showToast("Order Submitted!");
     }
 
     private void displayQuantity() {
@@ -57,15 +63,20 @@ public class MainActivity extends AppCompatActivity {
      * @return the price assuming 5 dollars each cup of coffee
      */
     private int calculatePrice(boolean hasWhippedCream, boolean hasChocolate) {
+        // add zero if no toppings
         int toppings = 0;
+
+        // add $1 if whipped cream was chosen
         if (hasWhippedCream) {
             toppings += 1;
         }
 
+        // add $2 if chocolate was chosen
         if (hasChocolate) {
             toppings += 2;
         }
 
+        // return the total price
         return (unitPrice + toppings) * quantity;
     }
 
@@ -129,10 +140,9 @@ public class MainActivity extends AppCompatActivity {
         return nameEditText.getText().toString();
     }
 
-    private void showToast() {
+    private void showToast(CharSequence msg) {
         Context context = getApplicationContext();
-        CharSequence msg = "Order Submitted!";
-        int duration = Toast.LENGTH_LONG;
+        int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, msg, duration);
 //        Toast toast = Toast.makeText(this, msg, duration);
