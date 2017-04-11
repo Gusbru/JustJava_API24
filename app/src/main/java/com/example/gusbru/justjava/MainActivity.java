@@ -1,6 +1,8 @@
 package com.example.gusbru.justjava;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,7 +15,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int quantity = 1;
+    private final int min_quantity = 1;
+    private final int max_quantity = 100;
+    private int quantity = min_quantity;
     private int unitPrice = 5;
 
     @Override
@@ -24,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void incrementQuantity(View view) {
         quantity += 1;
-        if (quantity > 100) {
-            quantity = 100;
+        if (quantity > max_quantity) {
+            quantity = max_quantity;
             showToast("Order above " +  quantity + " is not allowed");
         }
         displayQuantity();
@@ -33,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void decrementQuantity(View view) {
         quantity -= 1;
-        if (quantity < 1) {
-            quantity = 1;
+        if (quantity < min_quantity) {
+            quantity = min_quantity;
             showToast("Order below than " + quantity + " is not allowed");
         }
         displayQuantity();
@@ -48,6 +52,31 @@ public class MainActivity extends AppCompatActivity {
         price = calculatePrice(hasWhippedCream, hasChocolate);
         displayMessage(createOrderSummary(name, price, hasWhippedCream, hasChocolate));
         showToast("Order Submitted!");
+    }
+
+    public void openMap(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:-22.702322,-46.760751"));
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            showToast("Cannot open Map app");
+        }
+    }
+
+    public void sendToEmail(View view) {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_EMAIL, "gustavobruneto@gmail.com");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "order");
+        intent.putExtra(Intent.EXTRA_TEXT, "my text here!");
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            showToast("Cannot open Email app");
+        }
     }
 
     private void displayQuantity() {
@@ -106,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
      * @return a string with the order summary.
      */
     private String createOrderSummary(String name, int price, boolean hasWhippedCream, boolean hasChocolate) {
-        String msg = "Name: " + name;
-        msg += "\nAdd Whipped Cream? " + hasWhippedCream;
-        msg += "\nAdd Chocolate? " + hasChocolate;
-        msg += "\nQuantity: " + quantity;
-        msg += "\nTotal: $" + price;
-        msg += "\nThank You!";
+        String msg  = getString(R.string.order_summary_name, name);
+        msg += "\n" + getString(R.string.add_whipped_cream) + hasWhippedCream;
+        msg += "\n" + getString(R.string.add_chocolate) + hasChocolate;
+        msg += "\n" + getString(R.string.quantity) + quantity;
+        msg += "\n" + getString(R.string.total) + price;
+        msg += "\n" + getString(R.string.thank_you);
         return msg;
     }
 

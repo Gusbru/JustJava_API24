@@ -6,12 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         tools:context="com.example.gusbru.justjava.MainActivity">
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
@@ -19,96 +20,113 @@
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Name"/>
+                android:inputType="textCapWords"
+                android:hint="@string/name"/>
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Toppings"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="16dp"
-                android:textAllCaps="true"/>
+                style="@style/HeaderText"
+                android:text="@string/toppings" />
 
         <CheckBox
                 android:id="@+id/whipped_cream_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
-                android:text="Whipped Cream"
-                android:textSize="16dp"
-                android:paddingStart="24dp"/>
+                style="@style/checkBoxStyle"
+                android:text="@string/whipped_cream"/>
 
         <CheckBox
                 android:id="@+id/chocolate_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Chocolate"
-                android:textSize="16dp"
-                android:paddingStart="24dp"/>
+                style="@style/checkBoxStyle"
+                android:text="@string/chocolate" />
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantity"
-                android:layout_marginTop="16dp"
-                android:textAllCaps="true"
-                android:layout_marginStart="16dp"/>
+                style="@style/HeaderText"
+                android:text="@string/quantity" />
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp">
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
 
             <Button
                     android:id="@+id/decrease_quantity_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:onClick="decrementQuantity"
-                    android:text="-"/>
+                    android:text="@string/minus"/>
 
             <TextView
                     android:id="@+id/quantity_label"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="1"/>
+                    android:text="@string/one"/>
 
             <Button
                     android:id="@+id/increase_quantity_button"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:onClick="incrementQuantity"
-                    android:text="+"/>
+                    android:text="@string/plus"/>
 
         </LinearLayout>
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textColor="@android:color/black"
-                android:text="Order Summary"/>
+                style="@style/HeaderText"
+                android:text="@string/order_summary"/>
 
         <TextView
                 android:id="@+id/order_summary_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="$0.00"/>
+                android:text="@string/zero"/>
 
-        <Button
-                android:id="@+id/order_button"
-                android:layout_width="wrap_content"
+
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:onClick="submitOrder"
-                android:text="Order"/>
+                style="?android:attr/buttonBarStyle">
+
+            <Button
+                    android:id="@+id/order_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:onClick="submitOrder"
+                    android:text="@string/order"
+                    style="?android:attr/buttonBarButtonStyle"/>
+
+            <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:onClick="sendToEmail"
+                    android:text="@string/email_order"
+                    style="?android:attr/buttonBarButtonStyle"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <Button
+                    android:id="@+id/map_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:onClick="openMap"
+                    android:text="@string/map"/>
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
