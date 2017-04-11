@@ -14,6 +14,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private int quantity = 0;
+    private int unitPrice = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +28,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void decrementQuantity(View view) {
-        if (quantity>0) {
+        if (quantity > 0) {
             quantity -= 1;
         }
         displayQuantity();
     }
 
     public void submitOrder(View view) {
-        int price = calculatePrice();
+        int price;
+        String name = name();
         boolean hasWhippedCream = whippedCream();
         boolean hasChocolate = chocolate();
-        String name = name();
+        price = calculatePrice(hasWhippedCream, hasChocolate);
         displayMessage(createOrderSummary(name, price, hasWhippedCream, hasChocolate));
         showToast();
     }
@@ -48,17 +50,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * Calculate the total price
      *
+     * @param hasWhippedCream check if the customer order with whipped cream toppings
+     * @param hasChocolate check if the customer order with chocolate toppings
      * @return the price assuming 5 dollars each cup of coffee
      */
-    private int calculatePrice() {
-        return quantity * 5;
+    private int calculatePrice(boolean hasWhippedCream, boolean hasChocolate) {
+        int toppings = 0;
+        if (hasWhippedCream) {
+            toppings += 1;
+        }
+
+        if (hasChocolate) {
+            toppings += 2;
+        }
+
+        return (unitPrice + toppings) * quantity;
     }
 
     /**
-     *
      * This method display a message in the screen with the order summary
      *
      * @param message is a string that contains the information about the
@@ -77,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method create an order summary
      *
-     * @param name customer name
-     * @param price is the total value of the order
+     * @param name            customer name
+     * @param price           is the total value of the order
      * @param hasWhippedCream is whether or not the user wants whipped cream topping
-     * @param hasChocolate is whether or not the user wants chocolate topping
+     * @param hasChocolate    is whether or not the user wants chocolate topping
      * @return a string with the order summary.
      */
     private String createOrderSummary(String name, int price, boolean hasWhippedCream, boolean hasChocolate) {
@@ -94,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * Check box for whipped cream
      *
      * @return boolean with the information to add (true) or not (false) whipped cream
@@ -105,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * Check if chocolate is checked as toppings
      *
      * @return boolean with the information if chocolate should be added (true) or not (false)
@@ -120,9 +129,9 @@ public class MainActivity extends AppCompatActivity {
         return nameEditText.getText().toString();
     }
 
-    private void showToast(){
+    private void showToast() {
         Context context = getApplicationContext();
-        CharSequence msg = "Order Submitted!\nThanks";
+        CharSequence msg = "Order Submitted!";
         int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, msg, duration);
